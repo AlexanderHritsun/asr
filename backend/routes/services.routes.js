@@ -20,7 +20,7 @@ router.post('/create', auth, async (req, res) => {
     }
 })
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const services = await Service.find()
         await res.json(services)
@@ -29,7 +29,7 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const service = await Service.findById(req.params.id)
         await res.json(service)
