@@ -22,8 +22,11 @@ function Header(isAuthenticated) {
         return (
             <div>
                 <Navbar bg="dark" variant="dark" className="asr-nav">
-                    <Navbar.Brand href="/">ASR</Navbar.Brand>
+                    <Navbar.Brand href="/posts">ASR</Navbar.Brand>
                     <div className="ml-auto">
+                        <NavLink to='/services/create'>
+                            <Button variant="light" className='mr-m'>Создать сервис</Button>
+                        </NavLink>
                         <NavLink to='/posts/create'>
                             <Button variant="light" className='mr-m'>Новый пост</Button>
                         </NavLink>
@@ -53,7 +56,7 @@ function Header(isAuthenticated) {
     return (
         <div>
             <Navbar bg="dark" variant="dark" className="asr-nav">
-                <Navbar.Brand href="/">ASR</Navbar.Brand>
+                <Navbar.Brand href="/posts">ASR</Navbar.Brand>
                 <div className="ml-auto">
                     <NavLink to='/login'>
                         <Button variant="light" className='mr-m'>Войти</Button>

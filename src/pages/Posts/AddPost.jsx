@@ -21,7 +21,6 @@ function AddPost() {
             const data = await request ('/api/posts/create', 'POST', {...form}, {
                 Authorization: `Bearer ${token}`
             })
-            console.log(data);
         } catch (e) {}
     }
     return (
@@ -63,6 +62,7 @@ function AddPost() {
                     className='mr-m'
                     type="submit"
                     onClick={createHandler}
+                    href="/posts"
                     disabled={loading}
                 >
                     Создать пост

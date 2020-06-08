@@ -33,14 +33,12 @@ router.post('/create',
                 message: errorMessages
             })
         }
-        console.log(req.user)
         const service = new Post({
             title: req.body.title,
             text: req.body.text,
             file: req.body.file,
             author: req.user.userId
         })
-        console.log(service)
         try {
             await service.save();
             await res.status(201).json({ service })

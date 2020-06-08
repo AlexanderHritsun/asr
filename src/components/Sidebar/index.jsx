@@ -15,12 +15,12 @@ function Menu(isAuthenticated, isAdmin) {
                 <SideNav.Nav defaultSelected="home">
                     <NavItem eventKey="posts">
                         <NavIcon>
-                            <NavLink to="/">
+                            <NavLink to="/posts">
                                 <i className="fa fa-fw fa-newspaper-o" style={{ fontSize: '1.75em' }} />
                             </NavLink>
                         </NavIcon>
                         <NavText>
-                            <NavLink to="/">ПОСТЫ</NavLink>
+                            <NavLink to="/posts">ПОСТЫ</NavLink>
                         </NavText>
                     </NavItem>
 
@@ -64,12 +64,12 @@ function Menu(isAuthenticated, isAdmin) {
                     <SideNav.Nav defaultSelected="home">
                         <NavItem eventKey="posts">
                             <NavIcon>
-                                <NavLink to="/">
+                                <NavLink to="/posts">
                                     <i className="fa fa-fw fa-newspaper-o" style={{ fontSize: '1.75em' }} />
                                 </NavLink>
                             </NavIcon>
                             <NavText>
-                                <NavLink to="/">ПОСТЫ</NavLink>
+                                <NavLink to="/posts">ПОСТЫ</NavLink>
                             </NavText>
                         </NavItem>
 

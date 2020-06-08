@@ -1,9 +1,10 @@
 const {Router} = require('express')
 const Service = require('../models/Service')
 const auth = require('../middleware/auth.middleware')
+/*const role = require('../middleware/role.middleware')*/
 const router = Router();
 
-router.post('/services/create', auth, async (req, res) => {
+router.post('/create', auth, async (req, res) => {
     try {
         const service = new Service({
             name: req.body.name,
@@ -19,7 +20,7 @@ router.post('/services/create', auth, async (req, res) => {
     }
 })
 
-router.get('/services', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const services = await Service.find()
         await res.json(services)
@@ -28,7 +29,7 @@ router.get('/services', auth, async (req, res) => {
     }
 })
 
-router.get('/services/:id', auth, async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     try {
         const service = await Service.findById(req.params.id)
         await res.json(service)

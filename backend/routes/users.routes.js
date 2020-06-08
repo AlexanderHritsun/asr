@@ -2,12 +2,13 @@ const {validationResult} = require("express-validator");
 const {editUserValidators} = require("../validators");
 const {Router} = require('express')
 const auth = require('../middleware/auth.middleware')
+const role = require('../middleware/role.middleware')
 const User = require ('../models/User')
 
 
 const router = Router();
 
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, role.isAdmin, async (req, res) => {
     try{
         const users = await User.find();
         await res.status(200).json(users)
@@ -16,7 +17,7 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
-router.delete('/:id/delete', auth, async (req, res, next) => {
+router.delete('/:id/delete', auth, role.isAdmin, async (req, res, next) => {
     try{
         User.findByIdAndRemove(req.params.id, (error, data) => {
             if(error){
@@ -34,7 +35,7 @@ router.delete('/:id/delete', auth, async (req, res, next) => {
     }
 })
 
-router.get('/:id/edit', auth, async (req, res) => {
+router.get('/:id/edit', auth, role.isAdmin, async (req, res) => {
     try{
         const user = await User.findById(req.params.id);
         await res.status(200).json(user)
@@ -44,7 +45,7 @@ router.get('/:id/edit', auth, async (req, res) => {
          await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
      }
 })
-router.put('/:id/edit', auth, editUserValidators, async (req, res) => {
+router.put('/:id/edit', auth, role.isAdmin, editUserValidators, async (req, res) => {
     try{
 
         const errors = validationResult(req)

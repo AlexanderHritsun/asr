@@ -9,7 +9,7 @@ import {Loader} from "../Loader";
 export const UserCard = ({users, deleteUser}) => {
 
     if(!users.length){
-        return <p className="align-self-center">Юзеров пока нет</p>
+        return <p className="align-self-center" style={{marginLeft: '45px'}}>Юзеров пока нет</p>
     }
     console.log('Users object', {users})
     return (

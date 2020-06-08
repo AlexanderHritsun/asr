@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import BeautyStars from "beauty-stars";
 import { NavLink } from "react-router-dom";
 
-function OneService() {
+function ServiceSpecificPage() {
     useEffect(() => {
         // get from server request to your own server via axios
     });
@@ -17,4 +17,4 @@ function OneService() {
     );
 }
 
-export default OneService;
+export default ServiceSpecificPage;
