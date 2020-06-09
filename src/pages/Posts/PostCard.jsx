@@ -1,4 +1,4 @@
-import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import {Button, Card, Row, Image, Col, Container} from "react-bootstrap";
 import React from "react";
 import {NavLink} from "react-router-dom";
 
@@ -20,6 +20,14 @@ export const PostCard = ({posts}) => {
                             <Card.Text className="post-text">
                                 {post.text}
                             </Card.Text>
+
+                            {!!post.files.length && <Row style={{ padding: '10px 0' }}>
+                                {post.files.map((file, i) => (
+                                    <Col key={i} md={6}>
+                                        <Image src={file} fluid />
+                                    </Col>
+                                ))}
+                            </Row>}
 
                             <NavLink to={`/posts/${post._id}`}>
                                 <Button variant="primary">Читать дальше</Button>
