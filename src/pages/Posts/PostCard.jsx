@@ -11,9 +11,9 @@ export const PostCard = ({posts}) => {
 
     return (
         <Container>
-            {posts.map( post => {
+            {posts.map( (post, i) => {
                 return (
-                    <Card className='w100'>
+                    <Card key={i} className='w100'>
                         <Card.Body>
                             <Card.Title>{post.title}</Card.Title>
 

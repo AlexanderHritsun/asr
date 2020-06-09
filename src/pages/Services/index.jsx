@@ -30,7 +30,7 @@ function Services() {
     }
 
     return (
-            <ServiceCard services={services}/>
+        <ServiceCard services={services}/>
     );
 }
 
