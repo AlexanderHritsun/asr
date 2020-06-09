@@ -19,6 +19,50 @@ router.post('/create', auth,
             }
             return true
         }),
-    )
+    async (req, res) => {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()) {
+            const errorMessages = errors.array().map(el => el.msg)
+            console.log(errorMessages)
+            return res.status(400).json({
+                errors: errors.array(),
+                message: errorMessages
+            })
+        }
+
+        const review = new Review({
+            text: req.body.text,
+            rating: req.body.rating,
+            userId: req.user,
+        })
+        try{
+            await review.save();
+            await res.status(201).json({ review });
+
+        } catch (e) {
+            console.log(e)
+            await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        }
+    }
+)
+
+router.delete('/:id/delete', auth, async (req, res, next) => {
+    try{
+        await Review.findByIdAndRemove(req.params.id,(error, data) => {
+            if(error){
+                return next(error)
+            }
+            else {
+                res.status(200).json({
+                    msg: data
+                })
+            }
+        })
+    }
+    catch (e) {
+        console.log(e)
+        await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+    }
+})
 
 module.exports = router
