@@ -55,7 +55,8 @@ router.get('/', async (req, res) => {
         const search = req.query.search;
         if (search) {
             query['title'] = { $regex: new RegExp(search.toLowerCase(), 'i')};
-            await Post.find(query)
+            const result = await Post.find(query)
+            return await res.json(result)
         }
 
 
