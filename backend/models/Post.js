@@ -6,7 +6,7 @@ const schema = new Schema({
     text: {type: String, required:true},
     files: [{type: String}],
     author: {
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     comments: [{
