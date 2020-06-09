@@ -27,7 +27,7 @@ const Header = ({ isAuthenticated }) => {
 
     useEffect(() => {
         const query = qs.parse(search, { ignoreQueryPrefix: true });
-        if (query.search) setSearchText(query.search);
+        setSearchText(query.search || '');
     }, [search]);
 
     return (
