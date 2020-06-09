@@ -1,17 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Card} from "react-bootstrap";
 
 
 
 export const PostComment = ({comments}) => {
-    if(!comments) {
-        return (
-            <div>
-                <p>Комментариев пока нет</p>
-            </div>
-        )
-    }
-
     if(comments){
         return (
                 <Card className='w100'>
