@@ -50,6 +50,32 @@ router.post('/create',
 
 router.get('/', async (req, res) => {
     try {
+        let noMatch = null;
+        if(req.query.search) {
+            const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+            // Get all posts from DB
+            Post.find({title: regex}, function(err, posts){
+                if(err){
+                    console.log(err);
+                } else {
+                    if(posts.length < 1) {
+                        noMatch = "Ни одного поста не найдено";
+                    }
+                    res.json({ posts, noMatch })
+                }
+            });
+        } else {
+            Post.find({}, function(err, posts){
+                if(err){
+                    console.log(err);
+                } else {
+                    res.json({ posts, noMatch })
+                }
+            });
+        }
+
+
+
         const posts = await Post.find()
         await res.json(posts)
     } catch (e) {
@@ -65,5 +91,8 @@ router.get('/:id', async (req, res) => {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
     }
 })
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports = router;
