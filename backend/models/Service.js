@@ -5,7 +5,7 @@ const schema = new Schema({
     name: {type: String, required: true},
     description: {type: String, required:true},
     rating: {type: Number, default: 0},
-    file: String,
+    files: [{type: String}],
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'
