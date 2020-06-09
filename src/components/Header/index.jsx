@@ -1,24 +1,18 @@
-import React, {useContext} from "react";
+import React, { useContext, useCallback } from "react";
 import { Navbar, Button, Form, FormControl } from 'react-bootstrap';
-import { NavLink, useHistory} from "react-router-dom";
-import { GoSearch} from "react-icons/all";
-import {AuthContext} from "../../context/AuthContext";
+import { NavLink } from "react-router-dom";
+import { GoSearch } from "react-icons/all";
+import { AuthContext } from "context/AuthContext";
 
+const Header = ({isAuthenticated}) => {
 
-
-
-function Header(isAuthenticated) {
-
-    const history = useHistory()
     const auth = useContext(AuthContext)
 
-    const logoutHandler = event => {
-        event.preventDefault()
+    const logoutHandler = () => {
         auth.logout()
-         //history.push('/')
-    }
+    };
 
-    if(isAuthenticated) {
+    if (isAuthenticated) {
         return (
             <div>
                 <Navbar bg="dark" variant="dark" className="asr-nav">
@@ -30,21 +24,19 @@ function Header(isAuthenticated) {
                         <NavLink to='/posts/create'>
                             <Button variant="light" className='mr-m'>Новый пост</Button>
                         </NavLink>
-                        <NavLink to='/'>
-                            <Button
-                                variant="secondary"
-                                className='mr-m'
-                                onClick={logoutHandler}
-                            >
-                                Выйти
-                            </Button>
-                        </NavLink>
+                        <Button
+                            variant="secondary"
+                            className='mr-m'
+                            onClick={logoutHandler}
+                        >
+                            Выйти
+                        </Button>
                     </div>
                 </Navbar>
 
                 <Form inline>
                     <div className='search-icon'>
-                        <GoSearch/>
+                        <GoSearch />
                     </div>
                     <div className='search-wrapper'>
                         <FormControl type="text" placeholder="Поиск" className='w100 asr-input' />
@@ -69,13 +61,13 @@ function Header(isAuthenticated) {
 
             <Form inline>
                 <div className='search-icon'>
-                    <GoSearch/>
+                    <GoSearch />
                 </div>
                 <div className='search-wrapper'>
                     <FormControl type="text" placeholder="Поиск" className='w100 asr-input' />
                 </div>
             </Form>
-         </div>
+        </div>
     )
 }
 

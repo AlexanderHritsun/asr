@@ -5,16 +5,13 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import Header from './components/Header';
 import Menu from './components/Sidebar';
 import {BrowserRouter as Router,} from "react-router-dom";
-import {useRoutes} from "./routes";
+import Routes from "./routes";
 import {useAuth} from "./hooks/auth.hook";
 import {AuthContext} from "./context/AuthContext";
 
 function App() {
     const {token, login, logout, userId} = useAuth()
-    const isAuthenticated = !!token
-    const routes = useRoutes(isAuthenticated, false, true);
-    const header = Header(isAuthenticated);
-    const menu = Menu(isAuthenticated, true);
+    const isAuthenticated = !!token;
 
       return (
           <AuthContext.Provider value={{
@@ -22,10 +19,10 @@ function App() {
           }}>
                 <div className="App">
                     <Router>
-                        {header}
-                        {menu}
+                        <Header isAuthenticated={isAuthenticated} />
+                        <Menu isAuthenticated={isAuthenticated} isAdmin={true} />
                         <div className="content">
-                            {routes}
+                            <Routes isAuthenticated={isAuthenticated} isModer={false} isAdmin={true} />
                         </div>
                     </Router>
                 </div>

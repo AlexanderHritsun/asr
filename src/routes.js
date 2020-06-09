@@ -13,7 +13,7 @@ import PostSpecificPage from "./pages/Posts/PostPage";
 import CreateService from "./pages/Services/createServicePage";
 
 
-export const useRoutes = (isAuthenticated, isModer, isAdmin) => {
+const Routes = ({isAuthenticated, isModer, isAdmin}) => {
 
     return (
         <Switch>
@@ -66,3 +66,5 @@ export const useRoutes = (isAuthenticated, isModer, isAdmin) => {
         </Switch>
     )
 }
+
+export default Routes;
