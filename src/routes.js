@@ -38,7 +38,7 @@ const Routes = ({isAuthenticated, isModer, isAdmin}) => {
                 </Route>}
 
             {isAuthenticated && isAdmin && 
-                <Route path="/users">
+                <Route path="/users" exact>
                     <Users />
                 </Route>}
             {isAuthenticated && isAdmin && 

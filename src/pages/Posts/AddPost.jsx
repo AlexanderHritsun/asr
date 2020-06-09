@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Form, Button, Image, Row, Col} from "react-bootstrap";
-import {useHttp} from "../../hooks/http.hook";
-import {AuthContext} from "../../context/AuthContext";
-import {FormErrors} from "../../components/FormError";
+import React, { useContext, useEffect, useState } from "react";
+import { Form, Button, Image } from "react-bootstrap";
+import { useHttp } from "../../hooks/http.hook";
+import { AuthContext } from "../../context/AuthContext";
+import { FormErrors } from "../../components/FormError";
 
 
 
 
 function AddPost() {
-    const {token} = useContext(AuthContext)
-    const {loading, request, error} = useHttp();
+    const { token } = useContext(AuthContext)
+    const { loading, request, error } = useHttp();
     const [form, setForm] = useState({
         title: '', text: '', files: []
     })
@@ -25,15 +25,15 @@ function AddPost() {
     const fileChangeHandler = async (event) => {
         const files = [...event.target.files];
         Promise.all(files.map(file => toBase64(file))).then((values) => {
-            setForm({ ...form, files: values });
+            setForm({ ...form, files: [...form.files, ...values] });
         });
     }
     const createHandler = async () => {
         try {
-            const data = await request ('/api/posts/create', 'POST', {...form}, {
+            const data = await request('/api/posts/create', 'POST', { ...form }, {
                 Authorization: `Bearer ${token}`
             })
-        } catch (e) {}
+        } catch (e) { }
     }
     return (
         <div className="form">
@@ -72,21 +72,29 @@ function AddPost() {
                     onChange={fileChangeHandler}
                 />
 
-                {!!form.files.length && <Row style={{ padding: '10px 0' }}>
-                    {form.files.map((file, i) => (
-                        <Col key={i} md={6}>
-                            <Image src={file} fluid />
-                        </Col>
-                    ))}
-                </Row>}
+                {!!form.files.length &&
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            marginBottom: 15
+                        }}>
+                        {form.files.map((file, i) => (
+                            <Image src={file} rounded style={{
+                                maxWidth: 100,
+                                maxHeight: 100,
+                                margin: 10,
+                                objectFit: 'cover'
+                            }} />
+                        ))}
+                    </div>}
 
                 <Button
-                    style={{marginTop: 10}}
+                    style={{ marginTop: 10 }}
                     variant="secondary"
                     className='mr-m'
-                    type="submit"
+                    type="button"
                     onClick={createHandler}
-                    href="/posts"
                     disabled={loading}
                 >
                     Создать пост

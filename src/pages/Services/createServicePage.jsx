@@ -9,11 +9,23 @@ function CreateService() {
     const {loading, request, error} = useHttp();
     const {token} = useContext(AuthContext)
     const [form, setForm] = useState({
-        name: '', description: '', file: ''
+        name: '', description: '', files: []
     })
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
+    }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+    const fileChangeHandler = async (event) => {
+        const files = [...event.target.files];
+        Promise.all(files.map(file => toBase64(file))).then((values) => {
+            setForm({ ...form, files: values });
+        });
     }
 
     const creationHandler = async () => {
@@ -69,8 +81,8 @@ function CreateService() {
                     lang="ru"
                     custom
                     name="file"
-                    value={form.file}
-                    onChange={changeHandler}
+                    accept="image/*"
+                    onChange={fileChangeHandler}
                 />
 
 

@@ -15,6 +15,7 @@ export const useHttp = () => {
             }
 
             const response = await fetch(url, {method, body, headers})
+            
             if (response.status === 401) {
                 auth.logout()
             }

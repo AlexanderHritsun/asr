@@ -39,13 +39,22 @@ function PostSpecificPage() {
                         {post.text}
                     </Card.Text>
 
-                    {!!post.files.length && <Row style={{ padding: '10px 0' }}>
-                        {post.files.map((file, i) => (
-                            <Col key={i} md={6}>
-                                <Image src={file} fluid />
-                            </Col>
-                        ))}
-                    </Row>}
+                    {!!post.files.length &&
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: 15
+                            }}>
+                            {post.files.map((file, i) => (
+                                <Image src={file} rounded style={{
+                                    maxWidth: 400,
+                                    maxHeight: 400,
+                                    margin: 10,
+                                    objectFit: 'cover'
+                                }} />
+                            ))}
+                        </div>}
                 </Card.Body>
             </Card>
             {/*{comments.map(comment => {
