@@ -15,7 +15,11 @@ const schema = new Schema({
     author: {
         type: Types.ObjectId,
         ref: 'User'
-    }
+    },
+    comments: [{
+        type: Types.ObjectId,
+        ref: 'Comment'
+    }]
 })
 
 module.exports = model('Post', schema)

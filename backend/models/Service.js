@@ -5,10 +5,10 @@ const schema = new Schema({
     description: {type: String, required:true},
     rating: {type: Number, default: 0},
     file: String,
-    reviews: {
+    reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
-    }
+    }]
 })
 
 module.exports = model('Service', schema)

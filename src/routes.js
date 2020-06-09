@@ -18,15 +18,16 @@ export const useRoutes = (isAuthenticated, isModer, isAdmin) => {
     if(isAuthenticated && isAdmin) {
         return (
             <Switch>
-                <Route exact  path="/posts/:id">
+                <Route path="/posts/create">
+                    <AddPost />
+                </Route>
+                <Route path="/posts/:id">
                     <PostSpecificPage />
                 </Route>
                 <Route path="/users/:id/edit">
                     <EditUser />
                 </Route>
-                <Route path="/posts/create">
-                    <AddPost />
-                </Route>
+
                 <Route path="/support">
                     <Help />
                 </Route>
