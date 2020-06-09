@@ -3,7 +3,7 @@ import {Form, Button} from "react-bootstrap";
 import {useHttp} from "../../hooks/http.hook";
 import {FormErrors} from "../../components/FormError";
 import {AuthContext} from "../../context/AuthContext";
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import {Spinner} from "../../components/Loader";
 
 
@@ -11,6 +11,7 @@ import {Spinner} from "../../components/Loader";
 
 function EditUser() {
     const id = useParams().id
+    const history = useHistory();
     const {token} = useContext(AuthContext)
     const {loading, request, error} = useHttp();
     const [form, setForm] = useState({
@@ -105,8 +106,9 @@ function EditUser() {
                 </Button>
 
                 <Button
+                    type="button"
                     variant="primary"
-                    href="/users"
+                    onClick={() => history.push('/users')}
                 >
                     Отменить
                 </Button>

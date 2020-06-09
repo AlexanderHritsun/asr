@@ -11,10 +11,11 @@ export const ServiceCard = ({services}) => {
 
     return (
         <Container className="service-card">
-
+            <Row style={{ flexWrap: 'wrap' }}>
                 {services.map( (service, i) => {
                     return (
-                            <Card key={i} style={{ width: '18rem' }}>
+                        <Col key={i} md={3}>
+                            <Card>
                                 <Card.Img variant="top" src={service.files[0] || "https://cdn2.vectorstock.com/i/1000x1000/37/86/auto-mechanic-service-flat-icons-of-maintenance-vector-2953786.jpg"} />
                                 <Card.Body>
                                     <div>
@@ -40,9 +41,10 @@ export const ServiceCard = ({services}) => {
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
+                        </Col>
                     )
                 })}
-
+            </Row>
         </Container>
     )
 }
