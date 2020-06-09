@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom'
 import { Form, Button, Image } from "react-bootstrap";
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
 import { FormErrors } from "../../components/FormError";
 
-
-
-
 function AddPost() {
     const { token } = useContext(AuthContext)
     const { loading, request, error } = useHttp();
+    const history = useHistory();
     const [form, setForm] = useState({
         title: '', text: '', files: []
     })
@@ -32,8 +31,14 @@ function AddPost() {
         try {
             const data = await request('/api/posts/create', 'POST', { ...form }, {
                 Authorization: `Bearer ${token}`
-            })
+            });
+            history.push('/posts');
         } catch (e) { }
+    }
+    const removeFileHandler = (idx) => {
+        const copy = [...form.files];
+        copy.splice(idx, 1);
+        setForm({ ...form, files: copy });
     }
     return (
         <div className="form">
@@ -80,12 +85,27 @@ function AddPost() {
                             marginBottom: 15
                         }}>
                         {form.files.map((file, i) => (
-                            <Image src={file} rounded style={{
-                                maxWidth: 100,
-                                maxHeight: 100,
-                                margin: 10,
-                                objectFit: 'cover'
-                            }} />
+                            <div style={{ position: 'relative' }}>
+                                <Image src={file} rounded style={{
+                                    maxWidth: 100,
+                                    maxHeight: 100,
+                                    margin: 10,
+                                    objectFit: 'cover'
+                                }} />
+                                <div style={{ 
+                                    position: 'absolute',
+                                    top: 10,
+                                    right: 10,
+                                    width: 20,
+                                    height: 20,
+                                    background: 'rgba(0,0,0,0.5)',
+                                    borderRadius: 5,
+                                    fontSize: 12,
+                                    color: '#fff',
+                                    textAlign: 'center'
+                                }}
+                                onClick={() => removeFileHandler(i)}>X</div>
+                            </div>
                         ))}
                     </div>}
 

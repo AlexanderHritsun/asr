@@ -1,12 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
+import { useHistory } from 'react-router-dom'
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import {Spinner} from "../../components/Loader";
 import {FormErrors} from "../../components/FormError";
-import {Button, Form} from "react-bootstrap";
+import {Button, Form, Image} from "react-bootstrap";
 
 function CreateService() {
     const {loading, request, error} = useHttp();
+    const history = useHistory();
     const {token} = useContext(AuthContext)
     const [form, setForm] = useState({
         name: '', description: '', files: []
@@ -24,8 +26,13 @@ function CreateService() {
     const fileChangeHandler = async (event) => {
         const files = [...event.target.files];
         Promise.all(files.map(file => toBase64(file))).then((values) => {
-            setForm({ ...form, files: values });
+            setForm({ ...form, files: [...form.files, ...values] });
         });
+    }
+    const removeFileHandler = (idx) => {
+        const copy = [...form.files];
+        copy.splice(idx, 1);
+        setForm({ ...form, files: copy });
     }
 
     const creationHandler = async () => {
@@ -35,7 +42,7 @@ function CreateService() {
                     Authorization: `Bearer ${token}`
                 }
             )
-            console.log('Data ', data)
+            history.push('/services');
         } catch (e) {}
     }
 
@@ -75,6 +82,7 @@ function CreateService() {
                 </Form.Group>
 
                 <Form.File
+                    multiple
                     id="custom-file-translate-scss"
                     data-browse="Выбрать файл"
                     label="Загрузите фото"
@@ -85,11 +93,43 @@ function CreateService() {
                     onChange={fileChangeHandler}
                 />
 
+                {!!form.files.length &&
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            marginBottom: 15
+                        }}>
+                        {form.files.map((file, i) => (
+                            <div style={{ position: 'relative' }}>
+                                <Image src={file} rounded style={{
+                                    maxWidth: 100,
+                                    maxHeight: 100,
+                                    margin: 10,
+                                    objectFit: 'cover'
+                                }} />
+                                <div style={{ 
+                                    position: 'absolute',
+                                    top: 10,
+                                    right: 10,
+                                    width: 20,
+                                    height: 20,
+                                    background: 'rgba(0,0,0,0.5)',
+                                    borderRadius: 5,
+                                    fontSize: 12,
+                                    color: '#fff',
+                                    textAlign: 'center'
+                                }}
+                                onClick={() => removeFileHandler(i)}>X</div>
+                            </div>
+                        ))}
+                    </div>}
+
 
                 <Button
                     variant="secondary"
                     className='mr-m'
-                    type="submit"
+                    type="button"
                     onClick={creationHandler}
                     disabled={loading}
                 >
