@@ -16,13 +16,14 @@ export const PostComment = ({comments}) => {
         return (
                 <Card className='w100'>
                     <Card.Body>
+                        <Card.Title>
+                            {comments.user.name}
+                        </Card.Title>
                         <Card.Text>
                             {comments.text}
                         </Card.Text>
                     </Card.Body>
                 </Card>
         )
-    } else {
-        return ''
     }
 }

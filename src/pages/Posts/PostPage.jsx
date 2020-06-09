@@ -13,7 +13,6 @@ function PostSpecificPage() {
     const [post, setForm] = useState({
         title: '', text: '', files: []
     })
-    const [comments, setComments] = useState()
 
     const getPostData = useCallback(async () => {
         try {
@@ -23,7 +22,8 @@ function PostSpecificPage() {
             setForm(data)
         } catch (e) { }
     }, [token, request]);
-
+    console.log('POST',post)
+    console.log('POST COMMETNS',post.comments)
 
     useEffect(() => {
         getPostData()
@@ -57,7 +57,7 @@ function PostSpecificPage() {
                         </div>}
                 </Card.Body>
             </Card>
-            {/*{comments.map(comment => {
+            {/*{post.comments.map(comment => {
                 return(
                         <PostComment comments={comment}/>
                     )
