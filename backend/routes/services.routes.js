@@ -10,7 +10,7 @@ router.post('/create', auth, async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             rating: req.body.rating,
-            file: req.body.file,
+            files: req.body.files,
         })
 
         await service.save();
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const service = await Service.findById(req.params.id)
+        const service = await Service.findById(req.params.id).populate('reviews')
         await res.json(service)
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})

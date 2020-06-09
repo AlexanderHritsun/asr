@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const schema = new Schema({
     title: {type: String, required: true},
     text: {type: String, required:true},
-    file: String,
+    files: [{type: String}],
     author: {
         type: Types.ObjectId,
         ref: 'User'

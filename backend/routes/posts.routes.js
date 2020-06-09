@@ -36,7 +36,7 @@ router.post('/create',
         const service = new Post({
             title: req.body.title,
             text: req.body.text,
-            file: req.body.file,
+            files: req.body.files,
             author: req.user.userId
         })
         try {
@@ -50,7 +50,7 @@ router.post('/create',
 
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find().populate('comments')
+        const posts = await Post.find()
         await res.json(posts)
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id)
+        const post = await Post.findById(req.params.id).populate('comments')
         await res.json(post)
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
