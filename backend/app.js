@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const config = require('config');
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
 app.use(express.json());
 

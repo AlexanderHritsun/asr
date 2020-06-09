@@ -1,4 +1,5 @@
 import {useState, useCallback, useEffect} from 'react'
+import { useHistory } from "react-router-dom";
 
 const storageName = 'userData'
 
@@ -6,6 +7,7 @@ export const useAuth = () => {
     const [token, setToken] = useState(null)
     const [ready, setReady] = useState(false)
     const [userId, setUserId] = useState(null)
+    const history = useHistory();
 
     const login = useCallback((jwtToken, id) => {
         setToken(jwtToken)
@@ -21,6 +23,7 @@ export const useAuth = () => {
         setToken(null)
         setUserId(null)
         localStorage.removeItem(storageName)
+        if (history) history.push('/');
     }, [])
 
     useEffect(() => {

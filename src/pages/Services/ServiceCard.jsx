@@ -12,9 +12,9 @@ export const ServiceCard = ({services}) => {
     return (
         <Container className="service-card">
 
-                {services.map( service => {
+                {services.map( (service, i) => {
                     return (
-                            <Card style={{ width: '18rem' }}>
+                            <Card key={i} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://cdn2.vectorstock.com/i/1000x1000/37/86/auto-mechanic-service-flat-icons-of-maintenance-vector-2953786.jpg" />
                                 <Card.Body>
                                     <div>

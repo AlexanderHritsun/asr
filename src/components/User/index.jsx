@@ -18,7 +18,7 @@ export const UserCard = ({users, deleteUser}) => {
                 {users.map(user => {
                     return (
 
-                            <Col md={3}>
+                            <Col key={user.email} md={3}>
                                 <Card style={{marginBottom: 25}}>
                                     <Card.Body>
                                         <Card.Title>{user.name}</Card.Title>
