@@ -22,6 +22,14 @@ router.post('/create', auth, async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
+        const query = {};
+        const search = req.query.search;
+        if (search) {
+            query['name'] = { $regex: new RegExp(search.toLowerCase(), 'i')};
+            const result = await Service.find(query)
+            return await res.json(result)
+        }
+
         const services = await Service.find()
         await res.json(services)
     } catch (e) {

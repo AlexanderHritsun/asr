@@ -51,7 +51,6 @@ router.post('/create',
 router.get('/', async (req, res) => {
     try {
         const query = {};
-        console.log(req.query);
         const search = req.query.search;
         if (search) {
             query['title'] = { $regex: new RegExp(search.toLowerCase(), 'i')};
