@@ -50,7 +50,7 @@ router.post('/create',
 
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find()
+        const posts = await Post.find().populate('comments')
         await res.json(posts)
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})

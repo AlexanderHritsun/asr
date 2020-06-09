@@ -1,4 +1,5 @@
-const {Schema, model, Types} = require('mongoose');
+const {Schema, model} = require('mongoose');
+const mongoose = require('mongoose')
 
 const schema = new Schema({
     name: {type: String, required: true},
@@ -6,7 +7,7 @@ const schema = new Schema({
     rating: {type: Number, default: 0},
     file: String,
     reviews: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'
     }]
 })
