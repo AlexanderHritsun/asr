@@ -1,6 +1,0 @@
-{
-  "port": 5000,
-  "jwtSecret": "asr top forum",
-  "mongoUri": "mongodb+srv://admin:password12345@cluster0-jb98f.mongodb.net/app?retryWrites=true&w=majority",
-  "baseUrl": "http://localhost:5000"
-}
