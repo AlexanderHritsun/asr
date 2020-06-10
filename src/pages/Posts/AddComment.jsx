@@ -4,7 +4,7 @@ import { useHttp } from "hooks/http.hook";
 import { AuthContext } from "context/AuthContext";
 import { FormErrors } from "components/FormError";
 
-const AddComment = ({ onCreated, postId }) => {
+const AddComment = ({ onActionPerformed, postId }) => {
     const { token } = useContext(AuthContext)
     const { loading, request, error } = useHttp();
     const [form, setForm] = useState({
@@ -18,7 +18,7 @@ const AddComment = ({ onCreated, postId }) => {
             const data = await request('/api/comments/create', 'POST', { ...form, postId }, {
                 Authorization: `Bearer ${token}`
             });
-            if (onCreated) onCreated(data);
+            if (onActionPerformed) onActionPerformed(data);
             setForm({ text: '' })
         } catch (e) { }
     }

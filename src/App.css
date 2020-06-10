@@ -157,3 +157,24 @@ body {
   width: 100%;
   object-fit: cover;
 }
+
+.comment .card-body {
+  padding: 10px 20px;
+  text-align: left;
+}
+.comment .card-title {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.comment .card-text {
+  font-size: 14px;
+}
+
+.card {
+  position: relative;
+}
+.card .delete-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

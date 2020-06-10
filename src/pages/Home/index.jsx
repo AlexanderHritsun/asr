@@ -25,13 +25,17 @@ function Home() {
         fetchPosts()
     }, [fetchPosts])
 
+    const handlePostActionPerformed = () => {
+        fetchPosts()
+    }
+
     if (loading) {
         return <Spinner/>
     }
 
     return (
         <div className="post">
-            {!loading && <PostCard posts={posts}/>}
+            {!loading && <PostCard posts={posts} onActionPerformed={handlePostActionPerformed} />}
         </div>
     );
 }

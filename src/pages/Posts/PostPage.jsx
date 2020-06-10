@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Image } from "react-bootstrap";
+import { Card, Container, Row, Col, Image, Button } from "react-bootstrap";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
@@ -24,7 +24,7 @@ function PostSpecificPage() {
         } catch (e) { }
     }, [token, request]);
 
-    const handleCommentCreated = () => {
+    const handleCommentActionPerformed = () => {
         getPostData()
     }
 
@@ -70,10 +70,10 @@ function PostSpecificPage() {
             }
             {post.comments.map(comment => {
                 return(
-                        <PostComment comments={comment}/>
+                        <PostComment key={comment._id} comment={comment} onActionPerformed={handleCommentActionPerformed} />
                     )
             })}
-            <AddComment postId={post._id} onCreated={handleCommentCreated} />
+            {!!token && <AddComment postId={post._id} onActionPerformed={handleCommentActionPerformed} />}
         </Container>
     )
 }
