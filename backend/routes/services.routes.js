@@ -30,8 +30,12 @@ router.get('/', async (req, res) => {
             return await res.json(result)
         }
 
-        const services = await Service.find()
-        await res.json(services)
+        const services = await Service.find().populate('reviews')
+        await res.json(services.map(service => {
+            const ratingSum = service.reviews.reduce((sum, review) => sum + review.rating, 0);
+            service.rating = Math.round(ratingSum/service.reviews.length);
+            return service;
+        }))
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
     }
