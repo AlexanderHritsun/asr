@@ -26,12 +26,16 @@ function Services() {
         fetchServices()
     }, [fetchServices])
 
+    const handleServiceActionPerformed = () => {
+        fetchServices()
+    }
+
     if (loading) {
         return <Spinner/>
     }
 
     return (
-        <ServiceCard services={services}/>
+        <ServiceCard services={services} onActionPerformed={handleServiceActionPerformed}/>
     );
 }
 

@@ -46,4 +46,23 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.delete('/:id/delete', auth, async (req, res, next) => {
+    try{
+        await Service.findByIdAndRemove(req.params.id,(error, data) => {
+            if(error){
+                return next(error)
+            }
+            else {
+                res.status(200).json({
+                    msg: data
+                })
+            }
+        })
+    }
+    catch (e) {
+        console.log(e)
+        await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+    }
+})
+
 module.exports = router;

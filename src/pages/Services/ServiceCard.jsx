@@ -1,18 +1,33 @@
-import {Button, Card, Col, Container, Row} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import React from "react";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "context/AuthContext";
+import { useHttp } from "hooks/http.hook";
+import React, { useContext } from "react";
 import BeautyStars from "beauty-stars";
 
-export const ServiceCard = ({services}) => {
+export const ServiceCard = ({ services, onActionPerformed }) => {
+    const { request } = useHttp()
+    const { token, userRole } = useContext(AuthContext)
+    const isModer = userRole === 'moderator';
+    const isAdmin = userRole === 'admin';
 
-    if(!services.length){
+    const handleDeleteService = async (service) => {
+        try {
+            const data = await request(`/api/services/${service._id}/delete`, 'DELETE', null, {
+                Authorization: `Bearer ${token}`
+            })
+            if (onActionPerformed) onActionPerformed(data);
+        } catch (e) { }
+    }
+
+    if (!services.length) {
         return <p className="align-self-center">Постов пока нет</p>
     }
 
     return (
         <Container className="service-card">
             <Row style={{ flexWrap: 'wrap' }}>
-                {services.map( (service, i) => {
+                {services.map((service, i) => {
                     return (
                         <Col key={i} md={3}>
                             <Card>
@@ -40,6 +55,8 @@ export const ServiceCard = ({services}) => {
                                         {service.description}
                                     </Card.Text>
                                 </Card.Body>
+
+                                {(isAdmin || isModer) && <Button className="delete-btn" variant="secondary" onClick={() => handleDeleteService(service)}>Удалить</Button>}
                             </Card>
                         </Col>
                     )
