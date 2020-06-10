@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
 app.use(express.json());
 
+app.use(express.static('./client/build'));
+
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/posts', require('./routes/posts.routes'))
 app.use('/api/users', require('./routes/users.routes'))
