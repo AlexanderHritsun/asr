@@ -10,8 +10,10 @@ import {useAuth} from "./hooks/auth.hook";
 import {AuthContext} from "./context/AuthContext";
 
 function App() {
-    const {token, login, logout, userId} = useAuth()
+    const {token, login, logout, userId, userRole} = useAuth()
     const isAuthenticated = !!token;
+    const isModer = userRole === 'moderator';
+    const isAdmin = userRole === 'admin';
 
       return (
           <AuthContext.Provider value={{
@@ -20,9 +22,9 @@ function App() {
                 <div className="App">
                     <Router>
                         <Header isAuthenticated={isAuthenticated} />
-                        <Menu isAuthenticated={isAuthenticated} isAdmin={true} />
+                        <Menu isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
                         <div className="content">
-                            <Routes isAuthenticated={isAuthenticated} isModer={false} isAdmin={true} />
+                            <Routes isAuthenticated={isAuthenticated} isModer={isModer} isAdmin={isAdmin} />
                         </div>
                     </Router>
                 </div>

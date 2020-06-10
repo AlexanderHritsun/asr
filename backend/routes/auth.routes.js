@@ -105,7 +105,7 @@ router.post('/login',
             {expiresIn: '1h'}
         )
 
-        await res.json({token, userId: user.id})
+        await res.json({token, userId: user.id, userRole: user.role})
 
 
 

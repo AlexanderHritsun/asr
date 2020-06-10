@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const router = Router();
 const Comment = require('../models/Comment')
+const Post = require('../models/Post')
 const auth = require('../middleware/auth.middleware')
 const {check, validationResult} = require('express-validator')
 
@@ -25,10 +26,13 @@ router.post('/create', auth,
 
             const comment = new Comment({
                 text: req.body.text,
-                userId: req.user,
+                userId: req.user.userId,
             })
+            const post = await Post.findById(req.body.postId);
+            post.comments.push(comment._id);
             try{
                 await comment.save();
+                await post.save();
                 await res.status(201).json({ comment });
 
             } catch (e) {

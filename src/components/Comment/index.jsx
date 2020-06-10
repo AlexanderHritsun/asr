@@ -9,7 +9,7 @@ export const PostComment = ({comments}) => {
                 <Card className='w100'>
                     <Card.Body>
                         <Card.Title>
-                            {comments.user.name}
+                            {comments.userId ? comments.userId.name : ''}
                         </Card.Title>
                         <Card.Text>
                             {comments.text}

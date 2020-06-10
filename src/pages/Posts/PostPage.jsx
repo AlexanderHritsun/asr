@@ -1,9 +1,10 @@
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import { useHttp } from "../../hooks/http.hook";
-import { PostComment } from "../../components/Comment";
+import { AuthContext } from "context/AuthContext";
+import { useHttp } from "hooks/http.hook";
+import { PostComment } from "components/Comment";
+import AddComment from "./AddComment";
 
 
 function PostSpecificPage() {
@@ -22,6 +23,10 @@ function PostSpecificPage() {
             setForm(data)
         } catch (e) { }
     }, [token, request]);
+
+    const handleCommentCreated = () => {
+        getPostData()
+    }
 
     useEffect(() => {
         getPostData()
@@ -55,6 +60,9 @@ function PostSpecificPage() {
                         </div>}
                 </Card.Body>
             </Card>
+            <div style={{ padding: 10 }}>
+                Комментарии:
+            </div>
             {!post.comments.length &&
                 <div>
                     <p>Комментариев пока нет</p>
@@ -65,6 +73,7 @@ function PostSpecificPage() {
                         <PostComment comments={comment}/>
                     )
             })}
+            <AddComment postId={post._id} onCreated={handleCommentCreated} />
         </Container>
     )
 }

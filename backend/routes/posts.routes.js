@@ -68,7 +68,10 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id).populate('comments')
+        const post = await Post.findById(req.params.id).populate({
+            path: 'comments',
+            populate: { path: 'userId' }
+        });
         await res.json(post)
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
