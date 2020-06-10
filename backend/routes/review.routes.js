@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const router = Router();
 const Review = require('../models/Review')
+const Service = require('../models/Service')
 const auth = require('../middleware/auth.middleware')
 const {check, validationResult} = require('express-validator')
 
@@ -33,10 +34,13 @@ router.post('/create', auth,
         const review = new Review({
             text: req.body.text,
             rating: req.body.rating,
-            userId: req.user,
+            userId: req.user.userId,
         })
+        const service = await Service.findById(req.body.serviceId);
+        service.reviews.push(review._id);
         try{
             await review.save();
+            await service.save();
             await res.status(201).json({ review });
 
         } catch (e) {

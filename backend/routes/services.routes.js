@@ -39,7 +39,10 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const service = await Service.findById(req.params.id).populate('reviews')
+        const service = await Service.findById(req.params.id).populate({
+            path: 'reviews',
+            populate: { path: 'userId' }
+        });
         await res.json(service)
     } catch (e) {
         await res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
